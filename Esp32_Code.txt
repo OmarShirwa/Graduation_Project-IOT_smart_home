@@ -1,0 +1,190 @@
+      #if defined(ESP32)
+      #include <WiFi.h>
+      #include <FirebaseESP32.h>
+      #elif defined(ESP8266)
+      #include <ESP8266WiFi.h>
+      #include <FirebaseESP8266.h>
+      #endif
+      
+      Initiating Firebase Database;
+      #define out1 17 
+      #define out2 5 
+      #define out3 18
+      #define out4 19
+      #define out5 1
+      
+      //1. Firebase authentication token.
+      #define FIREBASE_HOST "espevren2-default-rtdb.firebaseio.com"
+      #define FIREBASE_AUTH "MfXEuyR4XvGNRjwUEIaxFGJDIIlQv0p38hwlOgSa"
+      
+      //SSID and Password.
+      #define WIFI_SSID "WIFI NAME"
+      #define WIFI_PASSWORD "PASSWARD"
+      
+      void setup() {
+      // put your setup code here, to run once:
+      Serial.begin(9600);
+      
+      // searching to connect to wifi.
+      WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+      Serial.print("connecting");
+      while (WiFi.status() != WL_CONNECTED) {
+      Serial.print(".");
+      delay(500);
+      }
+      Serial.println();
+      Serial.print("connected: ");
+      Serial.println(WiFi.localIP());
+      // Firebase connenction
+      // Reconnecting if the network is down
+      Firebase.reconnectWiFi(true);
+      Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+      
+      pinMode(out1,OUTPUT);
+      pinMode(out2,OUTPUT);
+      pinMode(out3,OUTPUT);
+      pinMode(out4,OUTPUT);
+      pinMode(out5,OUTPUT);
+      }
+      
+      void loop() {
+      
+      if(Firebase.getInt(veritabanim, "c1")) //We can use getInt, getBool, getFloat, getDouble or getString according to the data type to be retrieved.
+      {
+      
+      //if the connection is successful and data is being sent
+      Serial.print("String type data retrieval successful, data = ");
+      Serial.println(veritabanim.stringData());
+      
+      if (veritabanim.intData()==1){
+      digitalWrite(out1,LOW);
+      Serial.print("OUT-ON");
+      delay(50);
+      }
+      
+      else{
+      
+      digitalWrite(out1,HIGH);
+      Serial.print("OUT-OFF");
+      delay(50);
+      }
+      }
+      
+      else{
+      //prints error message and reason if there is an error
+      
+      Serial.print("Str data could not be retrieved, ");
+      Serial.println(veritabanim.errorReason());
+      }
+      
+      if(Firebase.getInt(veritabanim, "c2")) //We can use getInt, getBool, getFloat, getDouble or getString according to the data type to be retrieved.
+      {
+      
+      //if the connection is successful and data is being sent.
+      Serial.print("Data retrieval of type int successful, data = ");
+      Serial.println(veritabanim.intData());
+      
+      if (veritabanim.intData()==1){
+      digitalWrite(out2,LOW);
+      Serial.print("OUT-ON ");
+      delay(50);
+      }
+      
+      else {
+      
+      digitalWrite(out2,HIGH);
+      Serial.print("OUT-OFF  ");
+      delay(50);
+      }
+      }
+      
+      else{
+      //prints error message and reason if there is an error
+      
+      Serial.print("Failed to retrieve int data, ");
+      Serial.println(veritabanim.errorReason());
+      }
+      
+      if(Firebase.getInt(veritabanim, "c3")) //We can use getInt, getBool, getFloat, getDouble or getString according to the data type to be retrieved.
+      {
+      
+      //if the connection is successful and data is being sent.
+      Serial.print("Data retrieval of type int successful, data = ");
+      Serial.println(veritabanim.intData());
+      
+      if (veritabanim.intData()==1){
+      digitalWrite(out3,LOW);
+      Serial.print("OUT-ON-3");
+      delay(50);
+      }
+      
+      else{
+      
+      digitalWrite(out3,HIGH);
+      Serial.print("OUT-OFF-3");
+      delay(50);
+      }
+      }
+      
+      else{
+      //prints error message and reason if there is an error
+      
+      Serial.print("int verisi çekilemedi, ");
+      Serial.println(veritabanim.errorReason());
+      }
+      
+      if(Firebase.getInt(veritabanim, "c4")) //We can use getInt, getBool, getFloat, getDouble or getString according to the data type to be retrieved.
+      {
+      
+      //if the connection is successful and data is being sent.
+      Serial.print("Data retrieval of type int successful, data = ");
+      Serial.println(veritabanim.intData());
+      
+      if (veritabanim.intData()==1){
+      digitalWrite(out4,LOW);
+      Serial.print("OUT-ON ");
+      delay(50);
+      }
+      
+      else{
+      
+      digitalWrite(out4,HIGH);
+      Serial.print("OUT-OFF  ");
+      delay(50);
+      }
+      }
+      
+      else{
+      //prints error message and reason if there is an error.
+      
+      Serial.print("Failed to retrieve int data, ");
+      Serial.println(veritabanim.errorReason());
+      }
+      
+      if(Firebase.getInt(veritabanim, "c5")) //We can use getInt, getBool, getFloat, getDouble or getString according to the data type to be retrieved.
+      {
+      
+      //if the connection is successful and data is being sent.
+      Serial.print("Data retrieval of type int successful, data = ");
+      Serial.println(veritabanim.intData());
+      
+      if (veritabanim.intData()==1){
+      digitalWrite(out5,LOW);
+      Serial.print("OUT-ON ");
+      delay(50);
+      }
+      
+      else{
+      
+      digitalWrite(out5,HIGH);
+      Serial.print("OUT-OFF  ");
+      delay(50);
+      }
+      
+      }else{
+      //prints error message and reason if there is an error.
+      
+      Serial.print("Str data could not be retrieved, ");
+      Serial.println(veritabanim.errorReason());
+      }
+      }
